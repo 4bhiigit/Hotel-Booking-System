@@ -294,9 +294,9 @@ const HomePage = ({ showToast }) => {
 
   // Copy Promo Code
   const handleCopyCode = () => {
-    navigator.clipboard.writeText('GRAND25');
+    navigator.clipboard.writeText('MONSOON25');
     setCopiedCode(true);
-    if (showToast) showToast('Promo code GRAND25 copied to clipboard!', 'success');
+    if (showToast) showToast('Promo code MONSOON25 copied to clipboard!', 'success');
     setTimeout(() => setCopiedCode(false), 3000);
   };
 
@@ -469,13 +469,13 @@ const HomePage = ({ showToast }) => {
             <div className="space-y-4 max-w-2xl text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-widest border border-amber-500/30">
                 <Gift className="w-3.5 h-3.5" />
-                Limited-Time Luxury Offer
+                Monsoon Special Offer
               </div>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-                Summer Luxury Escape — Save Up to 25% OFF
+                Monsoon Luxury Escape — Save Up to 25% OFF
               </h2>
               <p className="text-amber-100/80 text-sm sm:text-base leading-relaxed">
-                Book a stay of 3+ nights directly on our website and receive complimentary daily gourmet breakfast, ₹7,500 spa voucher, and late check-out.
+                Book a stay of 3+ nights directly on our website and receive complimentary daily gourmet breakfast, ₹7,500 spa voucher, and late check-out during this monsoon season.
               </p>
             </div>
 
@@ -483,7 +483,7 @@ const HomePage = ({ showToast }) => {
             <div className="flex flex-col sm:flex-row items-center gap-4 bg-slate-900/90 border border-amber-500/30 p-4 rounded-2xl backdrop-blur-xl">
               <div className="text-center sm:text-left px-2">
                 <span className="text-xs text-slate-400 uppercase font-bold tracking-wider">Use Promo Code</span>
-                <div className="text-2xl font-black text-amber-400 tracking-wider">GRAND25</div>
+                <div className="text-2xl font-black text-amber-400 tracking-wider">MONSOON25</div>
               </div>
               <button
                 onClick={handleCopyCode}
