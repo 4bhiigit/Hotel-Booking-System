@@ -16,8 +16,8 @@ SAMPLE_ROOMS = [
         "description": "Floating palace luxury suite in Lake Pichola with private Jacuzzi, royal dining room, antique artwork, and 24/7 personal Khadidmatgar (butler) service.",
         "amenities": ["WiFi", "Lake Pichola View", "Private Jacuzzi", "Royal Butler Service", "Spacious Verandah", "Ayurvedic Spa Access", "King Featherbed"],
         "images": [
-            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1598977123418-45f04b01d4ac?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1613553507747-5f8d62ad5904?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.98
@@ -31,8 +31,8 @@ SAMPLE_ROOMS = [
         "description": "Opulent suite featuring a private temperature-controlled infinity pool overlooking Mewar palaces, gold-domed ceilings, and private dining courtyard.",
         "amenities": ["Private Infinity Pool", "Palace & Lake View", "Gold-Fitted Spa Bath", "Personal Butler", "WiFi", "Helipad Access", "King Bed"],
         "images": [
-            "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1585983229902-2179f7244983?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.99
@@ -46,8 +46,8 @@ SAMPLE_ROOMS = [
         "description": "Former residence of the Maharajah of Jaipur. Features Marwari silk draperies, authentic hand-carved Jharokha balcony, and royal peacock garden views.",
         "amenities": ["Peacock Garden View", "Heritage Balcony", "Royal High Tea", "Marble Soaking Tub", "WiFi", "Vintage Car Transfer"],
         "images": [
-            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.94
@@ -61,8 +61,8 @@ SAMPLE_ROOMS = [
         "description": "Architectural marvel in Lutyens' Delhi. Bullet-proof glass, private gym, gold-leaf motifs, Murano chandeliers, and Rolls-Royce chauffeur service.",
         "amenities": ["Private Gym", "Rooftop Heated Pool", "Rolls-Royce Transfer", "Butler Service", "High Speed Fiber WiFi", "Plush Spa Bath"],
         "images": [
-            "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.96
@@ -76,8 +76,8 @@ SAMPLE_ROOMS = [
         "description": "Iconic heritage suite overlooking Gateway of India and Arabian Sea, decorated with original museum-worthy Indian fine art and crystal chandeliers.",
         "amenities": ["Arabian Sea & Gateway View", "Private Wine Cellar", "Steam & Sauna", "24/7 Butler", "Executive Lounge Access"],
         "images": [
-            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1598324422288-efcb82939fbf?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.97
@@ -91,8 +91,8 @@ SAMPLE_ROOMS = [
         "description": "Portuguese-Goan style beachfront luxury villa overlooking Sinquerim beach with private plunge pool, hammock deck, and fresh seafood barbecue.",
         "amenities": ["Private Plunge Pool", "Sinquerim Beach Access", "Ocean Sunset Deck", "WiFi", "Barbecue Grill", "King Bed"],
         "images": [
-            "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.89
@@ -106,8 +106,8 @@ SAMPLE_ROOMS = [
         "description": "Located just 600 meters from the Taj Mahal. Uninterrupted views of the monument from your bed, private balcony, and marble soaking tub.",
         "amenities": ["Direct Taj Mahal View", "Private Balcony", "Teakwood Bar", "Marble Bath", "24/7 Room Service", "High Speed WiFi"],
         "images": [
-            "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.93
@@ -121,8 +121,8 @@ SAMPLE_ROOMS = [
         "description": "Nestled in pine and cedar forests 8,250 ft high in the Himalayas. Outdoor open-air heated whirlpool with snow-capped mountain views.",
         "amenities": ["Himalayan View", "Outdoor Heated Whirlpool", "Fireplace", "Pine Forest Trail", "Ayurvedic Spa", "King Bed"],
         "images": [
-            "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.91
@@ -136,8 +136,8 @@ SAMPLE_ROOMS = [
         "description": "Reconstructed 16th-century ancestral Kerala home (Illam) set on Vembanad Lake. Private courtyard pool, open-air bath, and sunset cruise.",
         "amenities": ["Vembanad Lake View", "Private Courtyard Pool", "Open-Air Bath", "Sunset Shikara Cruise", "Ayurvedic Center"],
         "images": [
-            "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.88
@@ -151,8 +151,8 @@ SAMPLE_ROOMS = [
         "description": "India's premier retreat resort in Delhi NCR with 27-hole Jack Nicklaus signature golf course, private plunge pool, and Kaya Kalp spa.",
         "amenities": ["27-Hole Golf Access", "Private Plunge Pool", "Kaya Kalp Spa", "Gourmet Dining", "Helipad", "King Suite"],
         "images": [
-            "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.92
@@ -166,8 +166,8 @@ SAMPLE_ROOMS = [
         "description": "One of the world's largest private residences built with Chittar sandstone. Art Deco architecture, private spa, and royal Marwar feast.",
         "amenities": ["Art Deco Design", "Private Palace Museum Tour", "Vintage Car Rally", "Butler", "Heated Indoor Pool", "King Bed"],
         "images": [
-            "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=80"
+            "https://images.unsplash.com/photo-1604316089392-f0271700cc97?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
         "rating": 4.99
@@ -181,7 +181,7 @@ SAMPLE_ROOMS = [
         "description": "Contemporary tropical sanctuary amidst lush paddy fields and Majorda beach. Private lap pool, outdoor rain shower, and organic dining.",
         "amenities": ["Majorda Beach Shuttle", "Private Lap Pool", "Paddy Field Views", "Rain Shower", "Free WiFi", "Organic Breakfast"],
         "images": [
-            "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=1200&q=80",
             "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
         ],
         "is_available": True,
@@ -238,11 +238,15 @@ async def seed_initial_data():
 
     logger.info("Seeding sample Indian luxury hotel rooms...")
     now = datetime.utcnow()
+    rooms_to_insert = []
     for r in SAMPLE_ROOMS:
-        r["created_at"] = now
-        r["updated_at"] = now
-    await db.rooms.insert_many(SAMPLE_ROOMS)
-    logger.info(f"Successfully seeded {len(SAMPLE_ROOMS)} Indian luxury hotel rooms.")
+        item = dict(r)
+        item.pop("_id", None)
+        item["created_at"] = now
+        item["updated_at"] = now
+        rooms_to_insert.append(item)
+    await db.rooms.insert_many(rooms_to_insert)
+    logger.info(f"Successfully seeded {len(rooms_to_insert)} Indian luxury hotel rooms.")
 
     # 4. Seed Initial Sample Bookings if empty
     bookings_count = await db.bookings.count_documents({})

@@ -15,10 +15,13 @@ class PlaceItemSchema(BaseModel):
     reviews_count: int
     price_level: str
     price_per_night: float
+    price_unit: Optional[str] = "/ night"
+    price_label: Optional[str] = "Est. Price"
     phone: Optional[str] = None
     website: Optional[str] = None
     images: List[str]
     amenities: List[str]
+    menu: Optional[List[dict]] = []
     is_open_now: bool = True
     description: str
 

@@ -28,7 +28,7 @@ const VIRTUAL_SUITES = [
     size: '220 m²',
     capacity: '6 Guests',
     price: 85000,
-    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1613553507747-5f8d62ad5904?auto=format&fit=crop&w=1200&q=80',
     hotspots: [
       'Private Heated Infinity Pool & Lake View',
       'Panoramic 270° Lake Pichola Sunset Views',
@@ -43,7 +43,7 @@ const VIRTUAL_SUITES = [
     size: '140 m²',
     capacity: '4 Guests',
     price: 45000,
-    image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80',
     hotspots: [
       'Private Jharokha Terrace Lounge',
       'Royal Hand-Carved Teakwood Decor',
@@ -58,7 +58,7 @@ const VIRTUAL_SUITES = [
     size: '95 m²',
     capacity: '2 Guests',
     price: 28000,
-    image: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80',
     hotspots: [
       'Private Sunset Balcony overlooking Arabian Sea',
       'Nespresso & Organic Indian Tea Bar',
@@ -73,7 +73,7 @@ const VIRTUAL_SUITES = [
     size: '110 m²',
     capacity: '2 Guests',
     price: 18500,
-    image: 'https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1200&q=80',
     hotspots: [
       'In-suite Jacuzzi & Herbal Sauna',
       'Authentic Ayurvedic Aromatherapy Menu',
@@ -91,7 +91,7 @@ const EXPERIENCES = [
     category: 'dining',
     title: 'Royal Indian Thali & Fine Dining',
     subtitle: 'Culinary Masterpieces & Vintage Spirits',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
     description: 'Savor multi-course Royal Thali tasting menus prepared by Master Chefs using secret palace recipes.',
     icon: Utensils,
     badge: 'Award Winner'
@@ -101,7 +101,7 @@ const EXPERIENCES = [
     category: 'wellness',
     title: 'Authentic Ayurvedic Spa & Yoga',
     subtitle: 'Rejuvenation for Mind, Body & Soul',
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=800&q=80',
     description: 'Experience traditional Panchakarma, Shirodhara oil therapy, and morning sunrise Yoga sessions.',
     icon: Waves,
     badge: 'Sanctuary'
@@ -111,7 +111,7 @@ const EXPERIENCES = [
     category: 'activities',
     title: 'Private Sunset Shikara Boat Cruise',
     subtitle: 'Serene Lake Excursions & Champagne',
-    image: 'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1598324423415-8b11e2f36d4d?auto=format&fit=crop&w=800&q=80',
     description: 'Glide across calm waters on private decorated Shikaras with live classical sitar melodies.',
     icon: Sunset,
     badge: 'Exclusive'
@@ -121,7 +121,7 @@ const EXPERIENCES = [
     category: 'services',
     title: 'VIP Chauffeur & Royal Transfer',
     subtitle: 'Zero-Delay Airport & Railway Pickups',
-    image: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80',
     description: 'Arrive in ultimate comfort with our luxury Rolls-Royce or Mercedes fleet and traditional flower garland welcome.',
     icon: Car,
     badge: '24/7 VIP'

@@ -44,6 +44,10 @@ const NearbyPlacesSection = ({ onSelectPlaceForBooking }) => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
+  // State for Menu Modal
+  const [selectedPlaceForMenu, setSelectedPlaceForMenu] = useState(null);
+  const [activeMenuTab, setActiveMenuTab] = useState('All');
+
   const lastFetchedCoordsRef = useRef(null);
   const watchIdRef = useRef(null);
 
@@ -344,7 +348,7 @@ const NearbyPlacesSection = ({ onSelectPlaceForBooking }) => {
             <AlertCircle className="w-10 h-10 text-red-400 mx-auto mb-3" />
             <p className="text-red-300 font-medium">{errorMsg}</p>
             <button
-              onClick={detectUserLocation}
+              onClick={startLiveTracking}
               className="mt-4 px-4 py-2 rounded-lg bg-red-500 text-white font-medium text-sm hover:bg-red-600 transition-all"
             >
               Retry Discovery
@@ -356,110 +360,129 @@ const NearbyPlacesSection = ({ onSelectPlaceForBooking }) => {
         {!loading && !errorMsg && (
           filteredPlaces.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPlaces.map((place) => (
-                <div 
-                  key={place.id}
-                  className="group rounded-2xl bg-slate-800/90 border border-slate-700/80 overflow-hidden shadow-xl hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col"
-                >
-                  {/* Image & Badges */}
-                  <div className="relative h-52 overflow-hidden bg-slate-950">
-                    <img 
-                      src={place.images[0]} 
-                      alt={place.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                    
-                    {/* Category Label Badge */}
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700 text-amber-400 font-bold text-xs">
-                      {place.category_label}
-                    </span>
+              {filteredPlaces.map((place) => {
+                const isFoodVenue = ['restaurant', 'cafe', 'sweets'].includes(place.category) || (place.menu && place.menu.length > 0);
+                const priceLabel = place.price_label || (['restaurant', 'cafe'].includes(place.category) ? 'Avg. Cost' : place.category === 'sweets' ? 'Avg. Price' : 'Est. Price');
+                const priceUnit = place.price_unit || (['restaurant', 'cafe'].includes(place.category) ? ' for two' : place.category === 'sweets' ? ' avg order' : ' / night');
 
-                    {/* Distance Badge */}
-                    <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-black text-xs inline-flex items-center gap-1 shadow-md">
-                      <Navigation className="w-3 h-3 fill-slate-950" />
-                      {place.distance_km} km away
-                    </span>
-
-                    {/* Rating */}
-                    <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-slate-950/80 px-2.5 py-1 rounded-md text-xs border border-slate-800">
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                      <span className="font-bold text-white">{place.rating}</span>
-                      <span className="text-slate-400">({place.reviews_count} reviews)</span>
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="p-5 flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1">
-                        {place.name}
-                      </h3>
+                return (
+                  <div 
+                    key={place.id}
+                    className="group rounded-2xl bg-slate-800/90 border border-slate-700/80 overflow-hidden shadow-xl hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 flex flex-col"
+                  >
+                    {/* Image & Badges */}
+                    <div className="relative h-52 overflow-hidden bg-slate-950">
+                      <img 
+                        src={place.images[0]} 
+                        alt={place.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                       
-                      <div className="flex items-start gap-1.5 mt-2 text-slate-400 text-xs">
-                        <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-                        <span className="line-clamp-2">{place.address}</span>
-                      </div>
+                      {/* Category Label Badge */}
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700 text-amber-400 font-bold text-xs">
+                        {place.category_label}
+                      </span>
 
-                      {/* Amenities pills */}
-                      <div className="flex flex-wrap gap-1.5 mt-4">
-                        {place.amenities.slice(0, 3).map((amenity, idx) => (
-                          <span 
-                            key={idx}
-                            className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-700/60 text-slate-300 text-[11px]"
-                          >
-                            {amenity}
-                          </span>
-                        ))}
+                      {/* Distance Badge */}
+                      <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-black text-xs inline-flex items-center gap-1 shadow-md">
+                        <Navigation className="w-3 h-3 fill-slate-950" />
+                        {place.distance_km} km away
+                      </span>
+
+                      {/* Rating */}
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-slate-950/80 px-2.5 py-1 rounded-md text-xs border border-slate-800">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <span className="font-bold text-white">{place.rating}</span>
+                        <span className="text-slate-400">({place.reviews_count} reviews)</span>
                       </div>
                     </div>
 
-                    {/* Footer Actions */}
-                    <div className="mt-5 pt-4 border-t border-slate-700/60 flex items-center justify-between gap-3">
+                    {/* Body Content */}
+                    <div className="p-5 flex-1 flex flex-col justify-between">
                       <div>
-                        <span className="text-xs text-slate-400 block">Est. Price</span>
-                        <span className="text-lg font-extrabold text-amber-400">
-                          ₹{place.price_per_night.toLocaleString('en-IN')}
-                          <span className="text-xs font-normal text-slate-400"> / night</span>
-                        </span>
+                        <h3 className="text-lg font-bold text-white group-hover:text-amber-400 transition-colors line-clamp-1">
+                          {place.name}
+                        </h3>
+                        
+                        <div className="flex items-start gap-1.5 mt-2 text-slate-400 text-xs">
+                          <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                          <span className="line-clamp-2">{place.address}</span>
+                        </div>
+
+                        {/* Amenities pills */}
+                        <div className="flex flex-wrap gap-1.5 mt-4">
+                          {place.amenities.slice(0, 3).map((amenity, idx) => (
+                            <span 
+                              key={idx}
+                              className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-700/60 text-slate-300 text-[11px]"
+                            >
+                              {amenity}
+                            </span>
+                          ))}
+                        </div>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        {/* Call Button */}
-                        {place.phone && (
+                      {/* Footer Actions */}
+                      <div className="mt-5 pt-4 border-t border-slate-700/60 flex items-center justify-between gap-3">
+                        <div>
+                          <span className="text-[11px] text-slate-400 block">{priceLabel}</span>
+                          <span className="text-base font-extrabold text-amber-400">
+                            ₹{place.price_per_night.toLocaleString('en-IN')}
+                            <span className="text-xs font-normal text-slate-400"> {priceUnit}</span>
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          {/* Call Button */}
+                          {place.phone && (
+                            <a
+                              href={`tel:${place.phone}`}
+                              title="Call Venue"
+                              className="p-2 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-amber-400 hover:text-white transition-all border border-slate-600"
+                            >
+                              <Phone className="w-4 h-4" />
+                            </a>
+                          )}
+
+                          {/* Directions Link */}
                           <a
-                            href={`tel:${place.phone}`}
-                            title="Call Venue"
-                            className="p-2 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-amber-400 hover:text-white transition-all border border-slate-600"
+                            href={`https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lon}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            title="Open Google Maps Directions"
+                            className="p-2 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-blue-400 hover:text-white transition-all border border-slate-600"
                           >
-                            <Phone className="w-4 h-4" />
+                            <ExternalLink className="w-4 h-4" />
                           </a>
-                        )}
 
-                        {/* Directions Link */}
-                        <a
-                          href={`https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lon}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          title="Open Google Maps Directions"
-                          className="p-2 rounded-xl bg-slate-700/80 hover:bg-slate-700 text-blue-400 hover:text-white transition-all border border-slate-600"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
-
-                        {/* Booking trigger */}
-                        <button
-                          onClick={() => onSelectPlaceForBooking && onSelectPlaceForBooking(place)}
-                          className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-all shadow-md active:scale-95"
-                        >
-                          Book Now
-                        </button>
+                          {/* Action Button: View Menu for Dining vs Book Now for Stays */}
+                          {isFoodVenue ? (
+                            <button
+                              onClick={() => {
+                                setSelectedPlaceForMenu(place);
+                                setActiveMenuTab('All');
+                              }}
+                              className="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold text-xs transition-all shadow-md active:scale-95 flex items-center gap-1"
+                            >
+                              <UtensilsCrossed className="w-3.5 h-3.5" />
+                              View Menu
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => onSelectPlaceForBooking && onSelectPlaceForBooking(place)}
+                              className="px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-all shadow-md active:scale-95"
+                            >
+                              Book Now
+                            </button>
+                          )}
+                        </div>
                       </div>
-                    </div>
 
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="py-16 text-center bg-slate-800/40 rounded-2xl border border-slate-800">
@@ -471,6 +494,117 @@ const NearbyPlacesSection = ({ onSelectPlaceForBooking }) => {
         )}
 
       </div>
+
+      {/* Interactive Venue Menu Modal */}
+      {selectedPlaceForMenu && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+          <div className="relative w-full max-w-2xl bg-slate-900 border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            
+            {/* Modal Header */}
+            <div className="relative p-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-800">
+              <button
+                onClick={() => setSelectedPlaceForMenu(null)}
+                className="absolute top-4 right-4 p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-all"
+              >
+                ✕
+              </button>
+
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-bold">
+                  {selectedPlaceForMenu.category_label}
+                </span>
+                <span className="text-xs text-slate-400 flex items-center gap-1">
+                  <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                  {selectedPlaceForMenu.rating} ({selectedPlaceForMenu.reviews_count} reviews)
+                </span>
+              </div>
+
+              <h3 className="text-2xl font-extrabold text-white">
+                {selectedPlaceForMenu.name} — Menu
+              </h3>
+              <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                {selectedPlaceForMenu.address}
+              </p>
+            </div>
+
+            {/* Menu Category Filter Tabs */}
+            {selectedPlaceForMenu.menu && selectedPlaceForMenu.menu.length > 0 && (
+              <div className="flex items-center gap-2 p-4 bg-slate-950/60 border-b border-slate-800 overflow-x-auto">
+                {['All', ...Array.from(new Set(selectedPlaceForMenu.menu.map(item => item.category)))].map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveMenuTab(tab)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+                      activeMenuTab === tab
+                        ? 'bg-amber-500 text-slate-950 shadow-md'
+                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Menu Items List */}
+            <div className="p-6 overflow-y-auto space-y-4 flex-1">
+              {selectedPlaceForMenu.menu && selectedPlaceForMenu.menu.length > 0 ? (
+                selectedPlaceForMenu.menu
+                  .filter(item => activeMenuTab === 'All' || item.category === activeMenuTab)
+                  .map((item, idx) => (
+                    <div 
+                      key={idx}
+                      className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60 flex items-start justify-between gap-4 hover:border-amber-500/40 transition-all"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className={`w-3.5 h-3.5 rounded-sm flex items-center justify-center border text-[9px] font-bold ${
+                            item.is_veg ? 'border-emerald-500 text-emerald-500' : 'border-red-500 text-red-500'
+                          }`}>
+                            {item.is_veg ? '🟢' : '🔴'}
+                          </span>
+                          <h4 className="font-bold text-white text-base">{item.name}</h4>
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-700">
+                            {item.category}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                          {item.description}
+                        </p>
+                      </div>
+
+                      <div className="text-right shrink-0">
+                        <span className="text-lg font-black text-amber-400">
+                          ₹{item.price}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+              ) : (
+                <div className="py-12 text-center text-slate-400 text-sm">
+                  Menu details currently updating from verified venue source.
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-4 bg-slate-950/80 border-t border-slate-800 flex items-center justify-between">
+              <span className="text-xs text-slate-400">
+                Avg Cost: <strong className="text-amber-400">₹{selectedPlaceForMenu.price_per_night}</strong> {selectedPlaceForMenu.price_unit}
+              </span>
+              <button
+                onClick={() => setSelectedPlaceForMenu(null)}
+                className="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all border border-slate-700"
+              >
+                Close Menu
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </section>
   );
 };

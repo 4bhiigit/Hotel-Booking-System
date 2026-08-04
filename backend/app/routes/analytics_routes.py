@@ -32,12 +32,36 @@ async def get_dashboard_analytics(admin: dict = Depends(get_current_admin)):
     occupied_rooms = total_rooms - available_rooms
     occupancy_rate = (occupied_rooms / total_rooms * 100) if total_rooms > 0 else 0.0
 
-    # Monthly revenue mock/aggregated data
-    months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]
-    monthly_revenue = [
-        {"month": m, "revenue": round(total_revenue * (0.08 + (i * 0.02)), 2), "bookings": (i + 1) * 3 + 4}
-        for i, m in enumerate(months)
+    # Monthly revenue calculation from real database bookings
+    pipeline_monthly = [
+        {"$match": {"status": {"$ne": "cancelled"}}},
+        {
+            "$group": {
+                "_id": {"$substr": ["$check_in", 0, 7]},
+                "revenue": {"$sum": "$total_price"},
+                "bookings": {"$sum": 1}
+            }
+        },
+        {"$sort": {"_id": 1}}
     ]
+    monthly_cursor = db.bookings.aggregate(pipeline_monthly)
+    monthly_data_list = await monthly_cursor.to_list(length=12)
+    
+    if monthly_data_list:
+        monthly_revenue = [
+            {
+                "month": item["_id"],
+                "revenue": round(item["revenue"], 2),
+                "bookings": item["bookings"]
+            }
+            for item in monthly_data_list
+        ]
+    else:
+        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"]
+        monthly_revenue = [
+            {"month": m, "revenue": round(total_revenue * (0.08 + (i * 0.02)), 2) if total_revenue > 0 else 0.0, "bookings": (i + 1) if total_revenue > 0 else 0}
+            for i, m in enumerate(months)
+        ]
 
     status_breakdown = [
         {"status": "Confirmed", "count": confirmed_bookings},
