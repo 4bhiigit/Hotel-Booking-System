@@ -7,7 +7,7 @@ const RoomCard = ({ room, onToggleWishlist, isWishlisted = false, onBookNow }) =
   const mainImage = room.images && room.images.length > 0 ? room.images[0] : defaultImage;
 
   return (
-    <div className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+    <div className="group bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/60 dark:shadow-black/90 hover:shadow-2xl hover:shadow-amber-500/10 dark:hover:shadow-amber-500/20 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full">
       {/* Image Container */}
       <div className="relative h-60 w-full overflow-hidden bg-slate-200 dark:bg-slate-800">
         <img

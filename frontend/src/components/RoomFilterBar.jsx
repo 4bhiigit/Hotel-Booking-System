@@ -5,7 +5,7 @@ const RoomFilterBar = ({ filters, onFilterChange, onReset }) => {
   const roomTypes = ["All", "Single", "Double", "Deluxe", "Suite", "Presidential"];
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-lg space-y-6 mb-10">
+    <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/60 dark:shadow-black/90 space-y-6 mb-10">
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
         <div className="flex items-center gap-2 font-bold text-slate-900 dark:text-slate-100">
           <SlidersHorizontal className="w-5 h-5 text-amber-500" />

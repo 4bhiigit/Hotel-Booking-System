@@ -8,13 +8,17 @@
   }
 }
 
-/* Custom glassmorphism utilities */
+/* Custom glassmorphism & card shadow utilities */
 .glass-panel {
-  @apply bg-white/80 dark:bg-[#09090b]/85 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/80 shadow-lg;
+  @apply bg-white/80 dark:bg-[#09090b]/85 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/80 shadow-xl shadow-slate-300/40 dark:shadow-black/90;
 }
 
 .glass-card {
-  @apply bg-white/70 dark:bg-[#09090b]/75 backdrop-blur-xl border border-white/20 dark:border-slate-800/80 shadow-2xl;
+  @apply bg-white/70 dark:bg-[#09090b]/75 backdrop-blur-xl border border-white/20 dark:border-slate-800/80 shadow-2xl shadow-slate-300/50 dark:shadow-black/95;
+}
+
+.card-shadow {
+  @apply shadow-xl shadow-slate-300/40 dark:shadow-black/90 border border-slate-200/80 dark:border-slate-800 hover:shadow-2xl hover:shadow-amber-500/10 dark:hover:shadow-amber-500/20 transition-all duration-300;
 }
 
 /* Custom scrollbars */

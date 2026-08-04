@@ -128,7 +128,7 @@ const UserBookingsPage = ({ showToast }) => {
             return (
               <div
                 key={booking.id}
-                className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-md flex flex-col md:flex-row gap-6 items-start md:items-center justify-between"
+                className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/60 dark:shadow-black/90 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between"
               >
                 {/* Room thumbnail & title */}
                 <div className="flex gap-4 items-center">
