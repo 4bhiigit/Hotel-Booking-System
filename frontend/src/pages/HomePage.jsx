@@ -800,7 +800,7 @@ const HomePage = ({ showToast }) => {
             <div className="space-y-6">
               <div className="border-b border-slate-800 pb-4 flex items-center justify-between">
                 <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400">Suite Highlights</span>
-                <span className="text-2xl font-black text-amber-400">${activeSuite.price} <span className="text-xs text-slate-400 font-normal">/ night</span></span>
+                <span className="text-2xl font-black text-amber-400">₹{activeSuite.price.toLocaleString('en-IN')} <span className="text-xs text-slate-400 font-normal">/ night</span></span>
               </div>
 
               {/* Hotspots List */}
