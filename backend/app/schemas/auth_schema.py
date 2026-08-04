@@ -13,10 +13,12 @@ class UserLoginSchema(BaseModel):
     password: str = Field(..., example="password123")
 
 class GoogleAuthSchema(BaseModel):
-    email: EmailStr = Field(..., example="john.google@gmail.com")
-    name: str = Field(..., example="John Google")
+    email: Optional[EmailStr] = Field(None, example="john.google@gmail.com")
+    name: Optional[str] = Field(None, example="John Google")
     google_id: Optional[str] = Field(None, example="google-uid-12345")
     avatar: Optional[str] = None
+    credential: Optional[str] = Field(None, description="Google OAuth 2.0 GIS Credential / ID Token")
+    id_token: Optional[str] = Field(None, description="Google OAuth ID Token")
 
 class SendOTPSchema(BaseModel):
     phone: str = Field(..., min_length=10, max_length=15, example="+919876543210")

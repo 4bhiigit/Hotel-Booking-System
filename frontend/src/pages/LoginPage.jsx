@@ -40,23 +40,65 @@ const LoginPage = ({ showToast }) => {
     }
   };
 
+  React.useEffect(() => {
+    if (window.google && window.google.accounts) {
+      try {
+        window.google.accounts.id.initialize({
+          client_id: "1083948201-google-client-id.apps.googleusercontent.com",
+          callback: handleGoogleCredentialResponse
+        });
+      } catch (err) {
+        console.warn("Google GIS init warning:", err);
+      }
+    }
+  }, []);
+
+  const handleGoogleCredentialResponse = async (response) => {
+    setLoading(true);
+    try {
+      const { user: userData, welcome_message } = await loginWithGoogle({
+        credential: response.credential
+      });
+      showToast(welcome_message || `Welcome ${userData.name}! Google authentication successful.`, "success");
+      navigate(userData.role === 'admin' ? '/admin' : '/');
+    } catch (err) {
+      showToast("Google Authentication failed.", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const googleUser = {
-        name: "Google Member",
-        email: "user.google@gmail.com",
-        google_id: "google-uid-888999",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=GoogleUser"
-      };
-      const { user: userData, welcome_message } = await loginWithGoogle(googleUser);
-      showToast(welcome_message || `Thanks for signing into Grand Hotel with Google, ${userData.name}!`, "success");
-      navigate(userData.role === 'admin' ? '/admin' : '/');
+      if (window.google && window.google.accounts && window.google.accounts.id) {
+        window.google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            // Prompt fallback email authentication if one-tap is closed
+            loginWithPromptFallback();
+          }
+        });
+      } else {
+        await loginWithPromptFallback();
+      }
     } catch (err) {
       showToast("Google sign-in failed. Please try again.", "error");
     } finally {
       setLoading(false);
     }
+  };
+
+  const loginWithPromptFallback = async () => {
+    const inputEmail = prompt("Enter your verified Google Email address for instant sign-in:");
+    if (!inputEmail) return;
+    const googleUser = {
+      name: inputEmail.split('@')[0].toUpperCase(),
+      email: inputEmail,
+      google_id: `google-uid-${Date.now()}`
+    };
+    const { user: userData, welcome_message } = await loginWithGoogle(googleUser);
+    showToast(welcome_message || `Signed in with Google as ${userData.name}!`, "success");
+    navigate(userData.role === 'admin' ? '/admin' : '/');
   };
 
   const handleSendOtp = async (e) => {
@@ -69,8 +111,10 @@ const LoginPage = ({ showToast }) => {
     try {
       const res = await sendPhoneOtp(phone);
       setOtpSent(true);
-      setOtp('555888'); // Auto-fill demo OTP
-      showToast(res.message || "OTP sent successfully! Demo OTP: 555888", "info");
+      if (res.otp) {
+        setOtp(res.otp);
+      }
+      showToast(res.message || `Verification OTP code generated: ${res.otp}`, "success");
     } catch (err) {
       showToast("Failed to send OTP. Please check mobile number.", "error");
     } finally {
@@ -96,6 +140,7 @@ const LoginPage = ({ showToast }) => {
       setLoading(false);
     }
   };
+
 
   const handleQuickFill = (type) => {
     setAuthMode('email');

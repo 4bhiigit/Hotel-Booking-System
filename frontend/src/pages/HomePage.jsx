@@ -9,6 +9,7 @@ import {
 import api from '../services/api';
 import RoomCard from '../components/RoomCard';
 import BookingModal from '../components/BookingModal';
+import NearbyPlacesSection from '../components/NearbyPlacesSection';
 import { useAuth } from '../context/AuthContext';
 
 // Background video options
@@ -188,9 +189,25 @@ const HomePage = ({ showToast }) => {
 
   // Background Video State
   const videoRef = useRef(null);
+  const hasAutoPausedRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [videoIndex, setVideoIndex] = useState(0);
+
+  // Timestamp (in seconds) where eyes are open to pause video
+  const EYE_OPEN_TIMESTAMP = 3.2;
+
+  const handleTimeUpdate = () => {
+    if (
+      videoRef.current &&
+      !hasAutoPausedRef.current &&
+      videoRef.current.currentTime >= EYE_OPEN_TIMESTAMP
+    ) {
+      videoRef.current.pause();
+      hasAutoPausedRef.current = true;
+      setIsPlaying(false);
+    }
+  };
 
   // Hero Quick Search State
   const [searchType, setSearchType] = useState('All');
@@ -237,6 +254,23 @@ const HomePage = ({ showToast }) => {
     };
     fetchFeatured();
   }, []);
+
+  const handleSelectPlaceForBooking = (place) => {
+    const formattedRoom = {
+      id: place.id,
+      _id: place.id,
+      title: place.name,
+      room_number: `REAL-${place.id.slice(-6)}`,
+      type: place.category_label,
+      price_per_night: place.price_per_night,
+      capacity: 2,
+      description: place.description,
+      amenities: place.amenities,
+      images: place.images,
+      rating: place.rating
+    };
+    setSelectedRoom(formattedRoom);
+  };
 
   useEffect(() => {
     if (videoRef.current) {
@@ -325,10 +359,11 @@ const HomePage = ({ showToast }) => {
           <video
             ref={videoRef}
             autoPlay
-            loop
             muted={isMuted}
             playsInline
             preload="auto"
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={() => setIsPlaying(false)}
             className="w-full h-full object-cover opacity-85 scale-105 transition-opacity duration-700"
             src={VIDEO_SOURCES[videoIndex].url}
           >
@@ -381,36 +416,36 @@ const HomePage = ({ showToast }) => {
             className="max-w-5xl mx-auto bg-slate-900/90 dark:bg-slate-900/95 backdrop-blur-2xl p-4 sm:p-6 rounded-3xl border border-white/20 shadow-2xl text-white grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end"
           >
             <div>
-              <label className="block text-xs font-extrabold uppercase tracking-wider text-amber-400/90 mb-2 text-left">
+              <label className="block text-xs font-extrabold uppercase tracking-wider text-amber-400 mb-2 text-left">
                 Suite Category
               </label>
               <select
                 value={searchType}
                 onChange={(e) => setSearchType(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-slate-800/90 border border-slate-700/80 text-white font-semibold text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                className="w-full px-4 py-3 rounded-2xl bg-slate-900 border-2 border-amber-500/80 text-white font-bold text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none shadow-xl shadow-amber-500/10 hover:border-amber-400 transition-all cursor-pointer"
               >
-                <option value="All">All Luxury Categories</option>
-                <option value="Presidential">Presidential Villa</option>
-                <option value="Suite">Executive Suite</option>
-                <option value="Deluxe">Ocean Deluxe</option>
-                <option value="Double">Double Suite</option>
-                <option value="Single">Classic Single</option>
+                <option value="All" className="bg-slate-900 text-white py-2.5">All Luxury Categories</option>
+                <option value="Presidential" className="bg-slate-900 text-white py-2.5">Presidential Villa</option>
+                <option value="Suite" className="bg-slate-900 text-white py-2.5">Executive Suite</option>
+                <option value="Deluxe" className="bg-slate-900 text-white py-2.5">Ocean Deluxe</option>
+                <option value="Double" className="bg-slate-900 text-white py-2.5">Double Suite</option>
+                <option value="Single" className="bg-slate-900 text-white py-2.5">Classic Single</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-extrabold uppercase tracking-wider text-amber-400/90 mb-2 text-left">
+              <label className="block text-xs font-extrabold uppercase tracking-wider text-amber-400 mb-2 text-left">
                 Guests
               </label>
               <select
                 value={searchCapacity}
                 onChange={(e) => setSearchCapacity(e.target.value)}
-                className="w-full px-4 py-3 rounded-2xl bg-slate-800/90 border border-slate-700/80 text-white font-semibold text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                className="w-full px-4 py-3 rounded-2xl bg-slate-900 border-2 border-amber-500/80 text-white font-bold text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none shadow-xl shadow-amber-500/10 hover:border-amber-400 transition-all cursor-pointer"
               >
-                <option value="1">1 Solo Traveler</option>
-                <option value="2">2 Guests (Couple)</option>
-                <option value="4">4 Guests (Family)</option>
-                <option value="6">6+ VIP Guests</option>
+                <option value="1" className="bg-slate-900 text-white py-2.5">1 Solo Traveler</option>
+                <option value="2" className="bg-slate-900 text-white py-2.5">2 Guests (Couple)</option>
+                <option value="4" className="bg-slate-900 text-white py-2.5">4 Guests (Family)</option>
+                <option value="6" className="bg-slate-900 text-white py-2.5">6+ VIP Guests</option>
               </select>
             </div>
 
@@ -457,6 +492,9 @@ const HomePage = ({ showToast }) => {
 
         </div>
       </section>
+
+      {/* DYNAMIC REAL-WORLD NEARBY PLACES SECTION */}
+      <NearbyPlacesSection onSelectPlaceForBooking={handleSelectPlaceForBooking} />
 
       {/* PROMOTIONAL COUNTDOWN & EXCLUSIVE DISCOUNT BANNER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

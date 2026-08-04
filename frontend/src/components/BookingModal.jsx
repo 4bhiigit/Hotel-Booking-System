@@ -176,10 +176,10 @@ const BookingModal = ({ room, onClose, onSuccess, onError }) => {
               <select
                 value={guestsCount}
                 onChange={(e) => setGuestsCount(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border-2 border-amber-500/80 text-slate-900 dark:text-slate-100 font-bold text-sm focus:ring-2 focus:ring-amber-500 outline-none cursor-pointer shadow-md hover:border-amber-400 transition-all"
               >
                 {[...Array(room.capacity)].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
+                  <option key={i + 1} value={i + 1} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">
                     {i + 1} {i === 0 ? "Guest" : "Guests"}
                   </option>
                 ))}

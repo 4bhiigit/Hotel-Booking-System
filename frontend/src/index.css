@@ -6,6 +6,71 @@
   body {
     @apply bg-slate-50 text-slate-900 dark:bg-black dark:text-slate-100 font-sans antialiased transition-colors duration-200;
   }
+
+  /* Global Custom Styled Select Dropdowns with Prominent Border & Rich Background */
+  select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f59e0b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 1rem center !important;
+    background-size: 1.2em 1.2em !important;
+    padding-right: 2.8rem !important;
+    border: 2px solid rgba(245, 158, 11, 0.75) !important;
+    border-radius: 1rem !important;
+    background-color: #0f172a !important; /* Dark Slate Background */
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), 0 0 10px rgba(245, 158, 11, 0.15) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* Light mode select container background & border */
+  html:not(.dark) select:not(.dark-select) {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border: 2px solid #f59e0b !important;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.12) !important;
+  }
+
+  select:hover {
+    border-color: #fbbf24 !important;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3) !important;
+    transform: translateY(-1px);
+  }
+
+  select:focus {
+    outline: none !important;
+    border-color: #f59e0b !important;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.35), 0 8px 25px rgba(245, 158, 11, 0.25) !important;
+  }
+
+  /* Options list popup menu styling */
+  select option {
+    background-color: #0f172a !important; /* Dark Slate 900 */
+    color: #f8fafc !important; /* Slate 50 */
+    padding: 12px 18px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Light mode option styling */
+  html:not(.dark) select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  select option:hover,
+  select option:focus,
+  select option:active,
+  select option:checked {
+    background-color: #f59e0b !important;
+    color: #ffffff !important;
+  }
 }
 
 /* Custom glassmorphism & card shadow utilities */

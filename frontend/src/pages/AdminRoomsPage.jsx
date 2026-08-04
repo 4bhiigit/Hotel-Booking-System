@@ -273,13 +273,13 @@ const AdminRoomsPage = ({ showToast }) => {
                   <select
                     value={formData.type}
                     onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 outline-none"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-900 border-2 border-amber-500/80 text-slate-900 dark:text-slate-100 font-bold text-sm outline-none cursor-pointer shadow-md hover:border-amber-400 transition-all"
                   >
-                    <option value="Single">Single</option>
-                    <option value="Double">Double</option>
-                    <option value="Deluxe">Deluxe</option>
-                    <option value="Suite">Suite</option>
-                    <option value="Presidential">Presidential</option>
+                    <option value="Single" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2">Single</option>
+                    <option value="Double" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2">Double</option>
+                    <option value="Deluxe" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2">Deluxe</option>
+                    <option value="Suite" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2">Suite</option>
+                    <option value="Presidential" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2">Presidential</option>
                   </select>
                 </div>
                 <div>

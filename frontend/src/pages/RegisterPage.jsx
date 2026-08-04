@@ -43,15 +43,20 @@ const RegisterPage = ({ showToast }) => {
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
-      const googleUser = {
-        name: "Google Member",
-        email: "user.google@gmail.com",
-        google_id: "google-uid-888999",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=GoogleUser"
-      };
-      const { user: userData, welcome_message } = await loginWithGoogle(googleUser);
-      showToast(welcome_message || `Thanks for signing up with Google, ${userData.name}! Welcome email dispatched.`, "success");
-      navigate('/');
+      if (window.google && window.google.accounts && window.google.accounts.id) {
+        window.google.accounts.id.prompt();
+      } else {
+        const inputEmail = prompt("Enter your verified Google Email address for instant sign-in:");
+        if (!inputEmail) return;
+        const googleUser = {
+          name: inputEmail.split('@')[0].toUpperCase(),
+          email: inputEmail,
+          google_id: `google-uid-${Date.now()}`
+        };
+        const { user: userData, welcome_message } = await loginWithGoogle(googleUser);
+        showToast(welcome_message || `Signed up with Google as ${userData.name}!`, "success");
+        navigate('/');
+      }
     } catch (err) {
       showToast("Google sign-in failed. Please try again.", "error");
     } finally {
@@ -69,8 +74,10 @@ const RegisterPage = ({ showToast }) => {
     try {
       const res = await sendPhoneOtp(phone);
       setOtpSent(true);
-      setOtp('555888'); // Auto-fill demo OTP
-      showToast(res.message || "OTP sent successfully! Demo OTP: 555888", "info");
+      if (res.otp) {
+        setOtp(res.otp);
+      }
+      showToast(res.message || `Verification OTP generated: ${res.otp}`, "success");
     } catch (err) {
       showToast("Failed to send OTP. Please check mobile number.", "error");
     } finally {
@@ -96,6 +103,7 @@ const RegisterPage = ({ showToast }) => {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">

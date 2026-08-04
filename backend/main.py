@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
+# Database and seed startup trigger
 
 from app.config.config import settings
 from app.database.connection import connect_to_mongo, close_mongo_connection
@@ -12,6 +13,7 @@ from app.routes.room_routes import router as room_router
 from app.routes.booking_routes import router as booking_router
 from app.routes.wishlist_routes import router as wishlist_router
 from app.routes.analytics_routes import router as analytics_router
+from app.routes.places_routes import router as places_router
 
 # Configure Logging
 logging.basicConfig(
@@ -71,6 +73,7 @@ app.include_router(room_router, prefix=api_v1)
 app.include_router(booking_router, prefix=api_v1)
 app.include_router(wishlist_router, prefix=api_v1)
 app.include_router(analytics_router, prefix=api_v1)
+app.include_router(places_router, prefix=api_v1)
 
 @app.get("/")
 async def root():

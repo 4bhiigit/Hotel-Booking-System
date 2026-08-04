@@ -46,10 +46,12 @@ const RoomFilterBar = ({ filters, onFilterChange, onReset }) => {
           <select
             value={filters.type}
             onChange={(e) => onFilterChange('type', e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border-2 border-amber-500/80 text-slate-900 dark:text-slate-100 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer shadow-md hover:border-amber-400 transition-all"
           >
             {roomTypes.map((t) => (
-              <option key={t} value={t}>{t === "All" ? "All Suite Categories" : t}</option>
+              <option key={t} value={t} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">
+                {t === "All" ? "All Suite Categories" : t}
+              </option>
             ))}
           </select>
         </div>
@@ -62,13 +64,13 @@ const RoomFilterBar = ({ filters, onFilterChange, onReset }) => {
           <select
             value={filters.capacity}
             onChange={(e) => onFilterChange('capacity', e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border-2 border-amber-500/80 text-slate-900 dark:text-slate-100 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer shadow-md hover:border-amber-400 transition-all"
           >
-            <option value="">Any Guests</option>
-            <option value="1">1+ Guest</option>
-            <option value="2">2+ Guests</option>
-            <option value="4">4+ Guests</option>
-            <option value="6">6+ Guests</option>
+            <option value="" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">Any Guests</option>
+            <option value="1" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">1+ Guest</option>
+            <option value="2" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">2+ Guests</option>
+            <option value="4" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">4+ Guests</option>
+            <option value="6" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">6+ Guests</option>
           </select>
         </div>
 
@@ -80,12 +82,12 @@ const RoomFilterBar = ({ filters, onFilterChange, onReset }) => {
           <select
             value={filters.sort_by}
             onChange={(e) => onFilterChange('sort_by', e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 border-2 border-amber-500/80 text-slate-900 dark:text-slate-100 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer shadow-md hover:border-amber-400 transition-all"
           >
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="rating_desc">Highest Rated</option>
-            <option value="newest">Newly Added</option>
+            <option value="price_asc" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">Price: Low to High</option>
+            <option value="price_desc" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">Price: High to Low</option>
+            <option value="rating_desc" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">Highest Rated</option>
+            <option value="newest" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 py-2.5">Newly Added</option>
           </select>
         </div>
       </div>

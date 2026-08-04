@@ -20,6 +20,11 @@ class Settings(BaseSettings):
     ADMIN_EMAIL: str = "admin@grandhotel.com"
     ADMIN_PASSWORD: str = "Admin@123"
 
+    # Optional Real API Credentials & Providers
+    GOOGLE_CLIENT_ID: str = os.getenv("GOOGLE_CLIENT_ID", "")
+    GOOGLE_PLACES_API_KEY: str = os.getenv("GOOGLE_PLACES_API_KEY", "")
+    SMS_API_KEY: str = os.getenv("SMS_API_KEY", "")
+
     class Config:
         case_sensitive = True
         env_file = ".env"

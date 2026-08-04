@@ -12,3 +12,4 @@ reportlab>=4.0.9
 qrcode>=7.4.2
 pillow>=10.2.0
 python-dotenv>=1.0.0
+httpx>=0.26.0
