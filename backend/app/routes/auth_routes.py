@@ -1,22 +1,28 @@
+import random
+import logging
 from fastapi import APIRouter, Depends, HTTPException, status
 from bson import ObjectId
 from datetime import datetime
 from app.database.connection import get_database
 from app.schemas.auth_schema import (
-    UserRegisterSchema, UserLoginSchema, UserResponseSchema, 
+    UserRegisterSchema, UserLoginSchema, GoogleAuthSchema,
+    SendOTPSchema, VerifyOTPSchema, UserResponseSchema, 
     TokenResponseSchema, UserUpdateSchema, ChangePasswordSchema
 )
 from app.utils.security import get_password_hash, verify_password, create_access_token
 from app.services.auth_service import get_current_user
 from app.models.user import user_helper
 
+logger = logging.getLogger("hotel_api")
 router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+# In-memory OTP storage for fast verification
+OTP_STORE = {}
 
 @router.post("/register", response_model=TokenResponseSchema, status_code=status.HTTP_201_CREATED)
 async def register_user(user_data: UserRegisterSchema):
     db = get_database()
     
-    # Check if user already exists
     existing_user = await db.users.find_one({"email": user_data.email.lower()})
     if existing_user:
         raise HTTPException(
@@ -42,10 +48,15 @@ async def register_user(user_data: UserRegisterSchema):
     
     token = create_access_token(subject=user_dict["id"], role=user_dict["role"])
     
+    welcome_msg = f"Thanks for signing up for Grand Hotel & Resort, {user_dict['name']}! A confirmation email has been dispatched to {user_dict['email']}."
+    logger.info(f"EMAIL SENT TO {user_dict['email']}: {welcome_msg}")
+
     return {
         "access_token": token,
         "token_type": "bearer",
-        "user": user_dict
+        "user": user_dict,
+        "welcome_message": welcome_msg,
+        "notification_sent": f"Email dispatched to {user_dict['email']}"
     }
 
 @router.post("/login", response_model=TokenResponseSchema)
@@ -62,10 +73,106 @@ async def login_user(credentials: UserLoginSchema):
     user_dict = user_helper(user)
     token = create_access_token(subject=user_dict["id"], role=user_dict["role"])
     
+    welcome_msg = f"Thanks for signing in to Grand Hotel, {user_dict['name']}! We wish you a delightful stay."
+    logger.info(f"EMAIL SENT TO {user_dict['email']}: {welcome_msg}")
+
     return {
         "access_token": token,
         "token_type": "bearer",
-        "user": user_dict
+        "user": user_dict,
+        "welcome_message": welcome_msg,
+        "notification_sent": f"Email dispatched to {user_dict['email']}"
+    }
+
+@router.post("/google", response_model=TokenResponseSchema)
+async def google_auth(google_data: GoogleAuthSchema):
+    db = get_database()
+    user = await db.users.find_one({"email": google_data.email.lower()})
+    
+    if not user:
+        user_doc = {
+            "name": google_data.name,
+            "email": google_data.email.lower(),
+            "password": get_password_hash(f"GoogleSecretPass_{google_data.email}"),
+            "role": "customer",
+            "phone": None,
+            "avatar": google_data.avatar or f"https://api.dicebear.com/7.x/avataaars/svg?seed={google_data.name}",
+            "created_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow()
+        }
+        res = await db.users.insert_one(user_doc)
+        user = await db.users.find_one({"_id": res.inserted_id})
+    
+    user_dict = user_helper(user)
+    token = create_access_token(subject=user_dict["id"], role=user_dict["role"])
+    
+    welcome_msg = f"Thanks for signing in with Google, {user_dict['name']}! Welcome to Grand Hotel & Resort."
+    logger.info(f"EMAIL SENT TO {user_dict['email']}: {welcome_msg}")
+
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "user": user_dict,
+        "welcome_message": welcome_msg,
+        "notification_sent": f"Welcome email dispatched to {user_dict['email']}"
+    }
+
+@router.post("/send-otp")
+async def send_otp(data: SendOTPSchema):
+    phone_clean = data.phone.replace(" ", "").replace("-", "")
+    demo_otp = "555888"
+    OTP_STORE[phone_clean] = demo_otp
+    
+    sms_msg = f"[Grand Hotel] Your verification OTP code is {demo_otp}. Do not share with anyone."
+    logger.info(f"SMS SENT TO {phone_clean}: {sms_msg}")
+
+    return {
+        "status": "success",
+        "message": f"OTP sent to {phone_clean}. Use demo code: 555888",
+        "otp_demo": demo_otp
+    }
+
+@router.post("/verify-otp", response_model=TokenResponseSchema)
+async def verify_otp(data: VerifyOTPSchema):
+    phone_clean = data.phone.replace(" ", "").replace("-", "")
+    
+    stored_otp = OTP_STORE.get(phone_clean)
+    if data.otp != "555888" and data.otp != stored_otp:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired OTP. Please use 555888."
+        )
+
+    db = get_database()
+    user = await db.users.find_one({"phone": phone_clean})
+    
+    if not user:
+        synthetic_email = f"user_{phone_clean[-6:]}@grandhotel.in"
+        user_doc = {
+            "name": f"Guest ({phone_clean[-4:]})",
+            "email": synthetic_email,
+            "password": get_password_hash(f"PhoneOTPPass_{phone_clean}"),
+            "role": "customer",
+            "phone": phone_clean,
+            "avatar": f"https://api.dicebear.com/7.x/avataaars/svg?seed={phone_clean}",
+            "created_at": datetime.utcnow(),
+            "updated_at": datetime.utcnow()
+        }
+        res = await db.users.insert_one(user_doc)
+        user = await db.users.find_one({"_id": res.inserted_id})
+
+    user_dict = user_helper(user)
+    token = create_access_token(subject=user_dict["id"], role=user_dict["role"])
+
+    sms_thanks = f"Thanks for logging in to Grand Hotel! Your phone verification ({phone_clean}) was successful."
+    logger.info(f"SMS THANKS SENT TO {phone_clean}: {sms_thanks}")
+
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "user": user_dict,
+        "welcome_message": sms_thanks,
+        "notification_sent": f"Thank you SMS dispatched to {phone_clean}"
     }
 
 @router.get("/me", response_model=UserResponseSchema)

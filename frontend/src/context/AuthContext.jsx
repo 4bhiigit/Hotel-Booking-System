@@ -29,20 +29,43 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
-    const { access_token, user: userData } = res.data;
+    const { access_token, user: userData, welcome_message } = res.data;
     localStorage.setItem('hotel_token', access_token);
     localStorage.setItem('hotel_user', JSON.stringify(userData));
     setUser(userData);
-    return userData;
+    return { user: userData, welcome_message };
   };
 
   const register = async (name, email, password, phone) => {
     const res = await api.post('/auth/register', { name, email, password, phone });
-    const { access_token, user: userData } = res.data;
+    const { access_token, user: userData, welcome_message } = res.data;
     localStorage.setItem('hotel_token', access_token);
     localStorage.setItem('hotel_user', JSON.stringify(userData));
     setUser(userData);
-    return userData;
+    return { user: userData, welcome_message };
+  };
+
+  const loginWithGoogle = async (googleData) => {
+    const res = await api.post('/auth/google', googleData);
+    const { access_token, user: userData, welcome_message } = res.data;
+    localStorage.setItem('hotel_token', access_token);
+    localStorage.setItem('hotel_user', JSON.stringify(userData));
+    setUser(userData);
+    return { user: userData, welcome_message };
+  };
+
+  const sendPhoneOtp = async (phone) => {
+    const res = await api.post('/auth/send-otp', { phone });
+    return res.data;
+  };
+
+  const verifyPhoneOtp = async (phone, otp) => {
+    const res = await api.post('/auth/verify-otp', { phone, otp });
+    const { access_token, user: userData, welcome_message } = res.data;
+    localStorage.setItem('hotel_token', access_token);
+    localStorage.setItem('hotel_user', JSON.stringify(userData));
+    setUser(userData);
+    return { user: userData, welcome_message };
   };
 
   const logout = () => {
@@ -57,7 +80,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateProfileState }}>
+    <AuthContext.Provider value={{ 
+      user, loading, login, register, loginWithGoogle, 
+      sendPhoneOtp, verifyPhoneOtp, logout, updateProfileState 
+    }}>
       {children}
     </AuthContext.Provider>
   );

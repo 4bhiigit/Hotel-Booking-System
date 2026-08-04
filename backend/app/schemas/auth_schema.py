@@ -12,6 +12,19 @@ class UserLoginSchema(BaseModel):
     email: EmailStr = Field(..., example="john@example.com")
     password: str = Field(..., example="password123")
 
+class GoogleAuthSchema(BaseModel):
+    email: EmailStr = Field(..., example="john.google@gmail.com")
+    name: str = Field(..., example="John Google")
+    google_id: Optional[str] = Field(None, example="google-uid-12345")
+    avatar: Optional[str] = None
+
+class SendOTPSchema(BaseModel):
+    phone: str = Field(..., min_length=10, max_length=15, example="+919876543210")
+
+class VerifyOTPSchema(BaseModel):
+    phone: str = Field(..., min_length=10, max_length=15, example="+919876543210")
+    otp: str = Field(..., min_length=4, max_length=6, example="555888")
+
 class UserUpdateSchema(BaseModel):
     name: Optional[str] = None
     phone: Optional[str] = None
@@ -37,3 +50,5 @@ class TokenResponseSchema(BaseModel):
     access_token: str
     token_type: str = "bearer"
     user: UserResponseSchema
+    welcome_message: Optional[str] = None
+    notification_sent: Optional[str] = None
