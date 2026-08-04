@@ -51,7 +51,7 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                <span>Oberoi Complex, Lake Pichola, Udaipur, Rajasthan 313001</span>
+                <span>Law gate LPU, Phagwara, Punjab, 144411</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-amber-500 flex-shrink-0" />
@@ -68,7 +68,7 @@ const Footer = () => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} Grand Hotel & Resort. All rights reserved.</p>
           <p className="flex items-center gap-1">
-            Built with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" /> for Industry-Level AWS Deployment.
+            Crafted with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" /> for World-Class Hospitality & Luxury Stays.
           </p>
         </div>
       </div>
